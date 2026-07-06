@@ -10,10 +10,15 @@ app.use(express.json());
 
 const PORT = Number(process.env.PORT || 8000);
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
-const codespaceName = process.env.CODESPACE_NAME;
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : `http://localhost:${PORT}`;
+
+function buildApiBaseUrl(port: number) {
+  const codespaceName = process.env.CODESPACE_NAME;
+  return codespaceName
+    ? `https://${codespaceName}-${port}.app.github.dev`
+    : `http://localhost:${port}`;
+}
+
+const apiBaseUrl = buildApiBaseUrl(PORT);
 
 async function buildCollectionPayload(resource: string, model: mongoose.Model<any>) {
   const items = await model.find({}).lean();
