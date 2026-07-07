@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { buildApiUrl } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`
+    : 'http://localhost:8000/api/users/';
 
   useEffect(() => {
     async function loadUsers() {
       try {
-        const response = await fetch(buildApiUrl('users'));
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`Failed to load users (${response.status})`);
         }
