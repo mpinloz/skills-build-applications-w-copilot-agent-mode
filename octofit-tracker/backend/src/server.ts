@@ -15,7 +15,7 @@ const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb:/
 function buildApiBaseUrl(port: number) {
   const codespaceName = process.env.CODESPACE_NAME;
   return codespaceName
-    ? `https://${codespaceName}-${port}.app.github.dev`
+    ? `https://${codespaceName}-8000.app.github.dev`
     : `http://localhost:${port}`;
 }
 
