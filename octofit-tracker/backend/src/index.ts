@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 
 const PORT = Number(process.env.PORT || 8000);
+const HOST = process.env.CODESPACE_NAME ? '0.0.0.0' : 'localhost';
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 
 function buildApiBaseUrl(port: number) {
@@ -66,8 +67,8 @@ async function start() {
     console.warn('MongoDB connection skipped:', error);
   }
 
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+  app.listen(PORT, HOST, () => {
+    console.log(`Server listening on ${HOST}:${PORT}`);
     console.log(`API base URL: ${apiBaseUrl}`);
   });
 }
